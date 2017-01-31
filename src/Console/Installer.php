@@ -10,6 +10,7 @@
  * @copyright   Copyright (c) Potato Powered Software
  * @link        http://potatopowered.net
  * @license     http://www.opensource.org/licenses/mit-license.php MIT License
+ * @codingStandardsIgnoreStart
  */
 namespace PluginTemplate\Console;
 
@@ -129,3 +130,6 @@ class Installer
         return false;
     }
 }
+/**
+ * @codingStandardsIgnoreEnd
+ */
