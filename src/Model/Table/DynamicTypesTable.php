@@ -13,7 +13,6 @@
  */
 namespace DynamicTypes\Model\Table;
 
-use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use DynamicTypes\Model\Entity\DynamicType;
@@ -21,7 +20,7 @@ use DynamicTypes\Model\Entity\DynamicType;
 /**
  * DynamicComments Model
  */
-class DynamicCommentsTable extends Table
+class DynamicTypesTable extends Table
 {
 
     /**
