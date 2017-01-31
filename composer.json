@@ -26,12 +26,12 @@
   },
   "autoload": {
     "psr-4": {
-      "DynamicType\\": "src"
+      "DynamicTypes\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "DynamicType\\Test\\": "tests"
+      "DynamicTypes\\Test\\": "tests"
     }
   },
   "scripts": {

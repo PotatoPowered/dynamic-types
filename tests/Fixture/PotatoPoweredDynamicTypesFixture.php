@@ -11,7 +11,7 @@
  * @link        http://potatopowered.net
  * @license     http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace DynamicType\Test\Fixture;
+namespace DynamicTypes\Test\Fixture;
 
 use Cake\TestSuite\Fixture\TestFixture;
 

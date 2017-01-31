@@ -11,7 +11,7 @@
  * @link        http://potatopowered.net
  * @license     http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace DynamicType\Model\Behavior;
+namespace DynamicTypes\Model\Behavior;
 
 use Cake\ORM\Behavior;
 use Cake\ORM\TableRegistry;

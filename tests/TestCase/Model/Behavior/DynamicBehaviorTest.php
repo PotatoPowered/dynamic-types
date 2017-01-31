@@ -11,27 +11,27 @@
  * @link        http://potatopowered.net
  * @license     http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace DynamicType\Test\TestCase\Model\Behavior;
+namespace DynamicTypes\Test\TestCase\Model\Behavior;
 
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use DynamicType\Model\Behavior\DynamicBehavior;
-use DynamicType\Test\Fixture;
+use DynamicTypes\Model\Behavior\DynamicBehavior;
+use DynamicTypes\Test\Fixture;
 
 /**
- * App\Model\Behavior\PotatoBehavior Test Case
+ * DynamicTypes\Model\Behavior\PotatoBehavior Test Case
  */
 class DynamicBehaviorTest extends TestCase
 {
 
     public $fixtures = [
-        'plugin.dynamic_type.potato_powered_dynamic_types'
+        'plugin.dynamic_types.potato_powered_dynamic_types'
     ];
 
     /**
      * Test subject
      *
-     * @var \DynamicType\Model\Behavior\DynamicBehavior
+     * @var \DynamicTypes\Model\Behavior\DynamicBehavior
      */
     public $Potato;
 
@@ -51,7 +51,7 @@ class DynamicBehaviorTest extends TestCase
     {
         parent::setUp();
         $this->Table = TableRegistry::get('PotatoPoweredDynamicTypes');
-        $this->Table->addBehavior('DynamicType.Dynamic', ['view_action' => 'show']);
+        $this->Table->addBehavior('DynamicTypes.Dynamic', ['view_action' => 'show']);
         $this->Potato = new DynamicBehavior(TableRegistry::get('PotatoPoweredDynamicTypes'));
     }
 
