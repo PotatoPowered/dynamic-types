@@ -24,6 +24,11 @@ use DynamicTypes\Test\Fixture;
 class DynamicBehaviorTest extends TestCase
 {
 
+    /**
+     * Fixtures used for testing
+     *
+     * @var array A list of the fixtures to be used
+     */
     public $fixtures = [
         'plugin.dynamic_types.potato_powered_dynamic_types'
     ];
@@ -40,7 +45,7 @@ class DynamicBehaviorTest extends TestCase
      *
      * @var \Cake\ORM\Table
      */
-    public $Table;
+    public $DynamicTypes;
 
     /**
      * setUp method
@@ -50,8 +55,9 @@ class DynamicBehaviorTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->Table = TableRegistry::get('PotatoPoweredDynamicTypes');
-        $this->Table->addBehavior('DynamicTypes.Dynamic', ['view_action' => 'show']);
+
+        $this->DynamicTypes = TableRegistry::get('PotatoPoweredDynamicTypes');
+        $this->DynamicTypes->addBehavior('DynamicTypes.Dynamic', ['view_action' => 'show']);
         $this->Potato = new DynamicBehavior(TableRegistry::get('PotatoPoweredDynamicTypes'));
     }
 
@@ -74,12 +80,54 @@ class DynamicBehaviorTest extends TestCase
      */
     public function testInitialization()
     {
+        // setup
+        $tableLookupTest = null;
+        $tableLookupTest2 = null;
+
+        // manipulate
         $tableLookupTest = $this->Potato->getType("test");
         $tableLookupTest2 = $this->Potato->getType("test2");
+
+        // assert
         $this->assertThat($tableLookupTest, $this->isType('int'));
         $this->assertThat($tableLookupTest2, $this->isType('int'));
         $this->assertThat($tableLookupTest < $tableLookupTest2, $this->isTrue());
     }
+
+    /**
+     * Test get type by id
+     *
+     * @return void
+     */
+    public function testGetTypeById()
+    {
+        // setup
+        $validId = 1;
+        $tableName = null;
+        $expectedTableName = 'users';
+
+        // manipulate
+        $tableName = $this->Potato->getTypeById($validId);
+
+        // assert
+        $this->assertEquals($expectedTableName, $tableName);
+    }
+
+    /**
+     * Test get type by id exception
+     *
+     * @return void
+     */
+    public function testGetTypeByIdException()
+    {
+        // setup
+        $invalidId = 999;
+        $this->expectException('\DynamicTypes\Datasource\Exception\DynamicTypeNotFoundException');
+
+        // manipulate
+        $this->Potato->getTypeById($invalidId);
+    }
+
 
     /**
      * Test view lookup
@@ -88,8 +136,8 @@ class DynamicBehaviorTest extends TestCase
      */
     public function testViewLookup()
     {
+        // assert
         $this->assertThat($this->Potato->getView() === 'view', $this->isTrue());
-
-        $this->assertThat($this->Table->getView() === 'show', $this->isTrue());
+        $this->assertThat($this->DynamicTypes->getView() === 'show', $this->isTrue());
     }
 }

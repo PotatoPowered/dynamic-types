@@ -45,7 +45,7 @@ class PotatoPoweredDynamicTypesFixture extends TestFixture
      */
     public $records = [
         [
-            'table_name' => 'Users',
+            'table_name' => 'users',
             'view_action' => 'view',
             'created' => '2016-01-01 12:13:14',
             'modified' => '2016-01-01 12:13:14'

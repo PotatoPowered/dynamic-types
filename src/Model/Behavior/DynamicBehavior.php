@@ -13,8 +13,10 @@
  */
 namespace DynamicTypes\Model\Behavior;
 
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\Behavior;
 use Cake\ORM\TableRegistry;
+use DynamicTypes\Datasource\Exception\DynamicTypeNotFoundException;
 
 /**
  * Class DynamicBehavior
@@ -72,6 +74,31 @@ class DynamicBehavior extends Behavior
                 'view_action' => $action
             ]
         );
+    }
+
+    /**
+     * Takes in the DynamicType id representation of a table and return the table name stored in the DynamicTypes
+     * database.
+     *
+     * @param int $id The ID of the type in the types table
+     * @return string The name of the table in the DynamicTypes table
+     */
+    public function getTypeById($id)
+    {
+        $config = $this->config();
+
+        $table = TableRegistry::get($config['lookup_table']);
+
+        try {
+            return $table->get($id)->table_name;
+        } catch (RecordNotFoundException $notFoundException) {
+            throw new DynamicTypeNotFoundException(
+                sprintf(
+                    'The table could not be found for id %s',
+                    $id
+                )
+            );
+        }
     }
 
     /**
