@@ -1,4 +1,5 @@
 codecov:
   branch: development
-  ignore:
-    - "src/Console/Installer.php"
+
+ignore:
+  - "src/Console/Installer.php"

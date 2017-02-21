@@ -11,10 +11,24 @@
  * @link        http://potatopowered.net
  * @license     http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace DynamicTypes;
+
 use Migrations\AbstractMigration;
 
+/**
+ * Class CreateDynamicTypes
+ *
+ * Injects the main table used for holding the dynamic types reference table.
+ *
+ * @package DynamicTypes
+ */
 class CreateDynamicTypes extends AbstractMigration
 {
+    /**
+     * Change method for CreateDynamicTypes
+     *
+     * @return void
+     */
     public function change()
     {
         $table = $this->table('potato_powered_dynamic_types');
