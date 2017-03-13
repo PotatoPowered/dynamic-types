@@ -18,14 +18,14 @@ use Migrations\AbstractMigration;
 /**
  * Class CreateDynamicTypes
  *
- * Injects the main table used for holding the dynamic types reference table.
+ * Injects the main table used for holding the DynamicTypes reference table.
  *
  * @package DynamicTypes
  */
 class CreateDynamicTypes extends AbstractMigration
 {
     /**
-     * Change method for CreateDynamicTypes
+     * Create DynamicTypes
      *
      * @return void
      */
@@ -44,6 +44,11 @@ class CreateDynamicTypes extends AbstractMigration
                 'null' => false,
             ])
             ->addColumn('created', 'datetime', [
+                'default' => null,
+                'limit' => null,
+                'null' => true
+            ])
+            ->addColumn('modified', 'datetime', [
                 'default' => null,
                 'limit' => null,
                 'null' => true

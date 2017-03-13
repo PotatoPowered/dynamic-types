@@ -16,10 +16,12 @@ namespace DynamicTypes\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * PotatoPoweredDynamicTypesFixture
+ * DynamicTypesFixture
  */
-class PotatoPoweredDynamicTypesFixture extends TestFixture
+class DynamicTypesFixture extends TestFixture
 {
+    public $table = "potato_powered_dynamic_types";
+
     /**
      * Fields
      *

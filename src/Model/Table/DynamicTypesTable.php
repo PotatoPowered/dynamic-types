@@ -18,7 +18,7 @@ use Cake\Validation\Validator;
 use DynamicTypes\Model\Entity\DynamicType;
 
 /**
- * DynamicComments Model
+ * DynamicType Model
  */
 class DynamicTypesTable extends Table
 {
@@ -34,7 +34,7 @@ class DynamicTypesTable extends Table
         parent::initialize($config);
 
         $this->table('potato_powered_dynamic_types');
-        $this->displayField('id');
+        $this->displayField('table_name');
         $this->primaryKey('id');
 
         // allows created and modified fields to populate

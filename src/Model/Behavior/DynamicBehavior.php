@@ -14,9 +14,12 @@
 namespace DynamicTypes\Model\Behavior;
 
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Event\Event;
 use Cake\ORM\Behavior;
+use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 use DynamicTypes\Datasource\Exception\DynamicTypeNotFoundException;
+use InvalidArgumentException;
 
 /**
  * Class DynamicBehavior
@@ -29,13 +32,12 @@ use DynamicTypes\Datasource\Exception\DynamicTypeNotFoundException;
 class DynamicBehavior extends Behavior
 {
     /**
-     * @var array This array contains the default configuration for the Dynamic Behavior
+     * @var array This array contains the default configuration for the DynamicBehavior
      */
     protected $_defaultConfig = [
         'lookup_table' => 'potato_powered_dynamic_types',
         'primary_key' => 'id',
-        'view_action' => 'view',
-        'associations' => [],
+        'view_action' => 'view'
     ];
 
     /**
@@ -130,5 +132,25 @@ class DynamicBehavior extends Behavior
         $entity = $table->findOrCreate($search);
 
         return $entity->id;
+    }
+
+    /**
+     * This action will be called when the model that uses this behavior is saved
+     *
+     * @param Event $event This is the event that is currently happening. This means save/modify etc
+     * @param Entity $entity The entity that is being modified or changed
+     * @return void
+     */
+    public function beforeSave(Event $event, Entity $entity)
+    {
+        $config = $this->config();
+
+        if ($entity->has('dynamic_type')) {
+            $dynamicType = $entity->get('dynamic_type');
+        } else {
+            throw new InvalidArgumentException("You must specify what type this dynamic object is linked to.");
+        }
+
+        $entity->set('dynamic_type_id', $this->getType($dynamicType));
     }
 }

@@ -15,11 +15,14 @@ namespace DynamicTypes\Test\TestCase\Model\Behavior;
 
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use DynamicTypes\Datasource\Exception\DynamicTypeNotFoundException;
 use DynamicTypes\Model\Behavior\DynamicBehavior;
+use DynamicTypes\Model\Table\DynamicTypesTable;
 use DynamicTypes\Test\Fixture;
+use InvalidArgumentException;
 
 /**
- * DynamicTypes\Model\Behavior\PotatoBehavior Test Case
+ * DynamicTypes\Model\Behavior\DynamicBehavior Test Case
  */
 class DynamicBehaviorTest extends TestCase
 {
@@ -30,7 +33,7 @@ class DynamicBehaviorTest extends TestCase
      * @var array A list of the fixtures to be used
      */
     public $fixtures = [
-        'plugin.dynamic_types.potato_powered_dynamic_types'
+        'plugin.dynamic_types.dynamic_types'
     ];
 
     /**
@@ -56,9 +59,8 @@ class DynamicBehaviorTest extends TestCase
     {
         parent::setUp();
 
-        $this->DynamicTypes = TableRegistry::get('PotatoPoweredDynamicTypes');
-        $this->DynamicTypes->addBehavior('DynamicTypes.Dynamic', ['view_action' => 'show']);
-        $this->Potato = new DynamicBehavior(TableRegistry::get('PotatoPoweredDynamicTypes'));
+        $this->DynamicTypes = TableRegistry::get((new DynamicTypesTable())->table());
+        $this->Potato = new DynamicBehavior(TableRegistry::get($this->DynamicTypes->table()));
     }
 
     /**
@@ -120,14 +122,59 @@ class DynamicBehaviorTest extends TestCase
      */
     public function testGetTypeByIdException()
     {
+        // assert errors
+        $this->expectException(DynamicTypeNotFoundException::class);
+
         // setup
         $invalidId = 999;
-        $this->expectException('\DynamicTypes\Datasource\Exception\DynamicTypeNotFoundException');
 
         // manipulate
         $this->Potato->getTypeById($invalidId);
     }
 
+    /**
+     * Test beforeSave throws invalid error
+     *
+     * @return void
+     */
+    public function testBeforeSaveError()
+    {
+        // assert errors
+        $this->expectException(InvalidArgumentException::class);
+
+        // setup
+        $this->DynamicTypes->addBehavior('DynamicTypes.Dynamic', ['view_action' => 'show']);
+        $dynamicType = $this->DynamicTypes->newEntity();
+
+        // assert
+        $this->DynamicTypes->save($dynamicType);
+    }
+
+    /**
+     * Test beforeSave success
+     *
+     * @return void
+     */
+    public function testBeforeSave()
+    {
+        // setup
+        $data = [
+            'table_name' => 'test_before_saved_table',
+            'view_action' => 'view',
+            'created' => '2017-01-01 12:13:14',
+            'modified' => '2017-01-01 12:13:14'
+        ];
+
+        $this->DynamicTypes->addBehavior('DynamicTypes.Dynamic', ['view_action' => 'show']);
+        $dynamicType = $this->DynamicTypes->newEntity();
+        $this->DynamicTypes->patchEntity($dynamicType, $data);
+        $dynamicType->set('dynamic_type', 'users');
+        $this->DynamicTypes->save($dynamicType);
+        $query = $this->DynamicTypes->find()->where(['table_name' => $data['table_name']]);
+
+        // assert
+        $this->assertEquals(1, $query->count());
+    }
 
     /**
      * Test view lookup
@@ -138,6 +185,5 @@ class DynamicBehaviorTest extends TestCase
     {
         // assert
         $this->assertThat($this->Potato->getView() === 'view', $this->isTrue());
-        $this->assertThat($this->DynamicTypes->getView() === 'show', $this->isTrue());
     }
 }

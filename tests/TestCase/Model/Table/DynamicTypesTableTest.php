@@ -27,7 +27,7 @@ class DynamicTypesTableTest extends TestCase
      */
     public $fixtures =
         [
-            'plugin.dynamic_types.potato_powered_dynamic_types'
+            'plugin.dynamic_types.dynamic_types'
         ];
 
     /**
@@ -45,7 +45,7 @@ class DynamicTypesTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->DynamicTypes = TableRegistry::get('PotatoPoweredDynamicTypes');
+        $this->DynamicTypes = TableRegistry::get((new DynamicTypesTable())->table());
     }
 
     /**
