@@ -77,7 +77,6 @@ class DynamicTypesTableTest extends TestCase
         $query = $this->DynamicTypes->findByTableName('users');
         $result = $query->hydrate(false)->toArray();
 
-
         // assert
         $this->assertInstanceOf('Cake\ORM\Query', $query);
         $this->assertEquals($expected, $result);
