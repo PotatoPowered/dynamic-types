@@ -33,7 +33,7 @@ class DynamicBehaviorTest extends TestCase
      * @var array A list of the fixtures to be used
      */
     public $fixtures = [
-        'plugin.dynamic_types.dynamic_types'
+        'plugin.dynamic_types.potato_powered_dynamic_types'
     ];
 
     /**

@@ -27,7 +27,7 @@ class DynamicTypesTableTest extends TestCase
      */
     public $fixtures =
         [
-            'plugin.dynamic_types.dynamic_types'
+            'plugin.dynamic_types.potato_powered_dynamic_types'
         ];
 
     /**

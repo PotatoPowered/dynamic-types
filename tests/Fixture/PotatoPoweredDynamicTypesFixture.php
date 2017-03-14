@@ -18,7 +18,7 @@ use Cake\TestSuite\Fixture\TestFixture;
 /**
  * DynamicTypesFixture
  */
-class DynamicTypesFixture extends TestFixture
+class PotatoPoweredDynamicTypesFixture extends TestFixture
 {
     public $table = "potato_powered_dynamic_types";
 
